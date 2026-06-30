@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al Sadat — Motion Designer & Video Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0b0f19;       
+  --white: #f4f6fc;       
+  --accent: #4a90e2;      
+  --accent2: #5c6bc0;     
+  --gray: #131a2c;        
+  --gray2: #1e2942;       
+  --muted: #8c9ba5;       
+  --border: rgba(255,255,255,0.06);
+  --max-content: 1200px;
+  --hero-bg-img: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiX4EyebEssVneZC7Uw9wpQnCdJeA726X_yUI-nvkjG1UJh8OAbkCVzArgiYBfBKle0EVp6F6C_GkDMU-R16weTm9yHTRKOuH-fIW7UzXxPEtwuWpMpFadobZed3Lf739vs-oSQlPslYfuh1ft8-jmQXnf3GF5aQG3Muu2LCTYDEJSA3QpeZlg0r2ptD-A/s1600/ChatGPT%20Image%20Jun%2030,%202026,%2009_41_47%20PM%20copy.jpg');
+  
+  /* 1. هنا تقدر تغير مسار اللوجو بسهولة في أي وقت كـ Reference */
+  --logo-url: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEfw1lrtk3yHWVeEbHKBP8jdq_SaJqGTj0m1F1sVKQm4jgRETH92kjTZCJXdLgNqngFcSgWRKPfhgZUf2PT-n2Sk8ipErN4KqNXTySswss9AaeFjdI0u_IAc53eDFtk1Gwq1YlPGz-wcTff7UAM7k8lpJ04XpAy9RpeCHySvKwkDx0CMvvIrcRIRXynUE/s1600/logo.png');
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(20px);
+  background: rgba(11, 15, 25, 0.75);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* نعومة حركة البار بالكامل */
+}
+
+.nav-container {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: var(--max-content); margin: 0 auto; 
+  padding: 0.6rem 2rem; 
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* يوسع بانسيابية مع اللوجو */
+}
+
+/* LOGO STYLING (WITH HOVER & NO CLICK) */
+.nav-logo-box {
+  display: flex;
+  align-items: center;
+  cursor: default;          /* الماوس يفضل سهم عادي وميبانش إنه لينك بيتدايس عليه */
+  pointer-events: auto;     
+}
+
+.nav-logo-render {
+  height: 65px;
+  width: 140px;            /* عرض افتراضي مناسب، هيتظبط تلقائي حسب الصورة */
+  background-image: var(--logo-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* تأثير التكبير النظيف للوجو */
+}
+
+/* تأثير الـ Hover المشترك: لما الماوس ييجي على منطقة اللوجو */
+.nav-logo-box:hover .nav-logo-render {
+  transform: scale(1.1);   /* اللوجو يكبر بنسبة 10% بشكل شيك */
+}
+nav:has(.nav-logo-box:hover) .nav-container {
+  padding-top: 0.9rem;     /* البار بيفتح ويوسع مع تكبير حجم اللوجو تلقائياً */
+  padding-bottom: 0.9rem;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 12px; font-weight: 500; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* NAV ACTIONS */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-whatsapp-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  direction: rtl;
+}
+.nav-whatsapp-text {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* الأزرار مع تأثير الـ Scale 5% والـ Opacity الخفيف */
+.nav-whatsapp-btn {
+  font-size: 11px; font-weight: 600;
+  background: var(--accent); 
+  color: #fff;
+  padding: 8px 16px; border-radius: 100px;
+  text-decoration: none; display: flex; align-items: center; gap: 6px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-whatsapp-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+.nav-whatsapp-btn:hover {
+  transform: scale(1.05); /* تكبير بنسبة 5% */
+  opacity: 0.92;          /* تأثير شفافية خفيف ونظيف */
+}
+
+.nav-cta {
+  font-size: 11px; font-weight: 600;
+  background: var(--accent); color: #fff;
+  padding: 8px 18px; border-radius: 100px;
+  text-decoration: none; 
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-cta:hover { 
+  transform: scale(1.05); 
+  opacity: 0.92; 
+}
+
+.nav-cta-portfolio {
+  font-size: 11px; font-weight: 600;
+  background: var(--accent); 
+  color: #fff;
+  padding: 8px 18px; border-radius: 100px;
+  text-decoration: none; 
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-cta-portfolio:hover { 
+  transform: scale(1.05); 
+  opacity: 0.92; 
+}
+
+/* HERO BANNER FULL SCREEN */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: 80px;
+  position: relative; overflow: hidden;
+}
+.hero-bg-cover {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(to bottom, rgba(11, 15, 25, 0.7), rgba(11, 15, 25, 0.95)), var(--hero-bg-img);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transform: scale(1.02);
+}
+.hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+.hero-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+.hero-eyebrow span {
+  font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+}
+
+.hero h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  max-width: 900px;
+  margin-bottom: 1.8rem;
+}
+.hero h1 em { font-style: normal; color: var(--white); }
+.hero h1 .acc { color: var(--accent); }
+.hero-meta { display: flex; align-items: center; gap: 3rem; justify-content: space-between; flex-wrap: wrap; }
+.hero-desc { font-size: 15px; color: var(--muted); max-width: 420px; line-height: 1.7; font-weight: 300; }
+.hero-actions { display: flex; gap: 12px; align-items: center; }
+
+.btn-main {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 600;
+  padding: 14px 28px; border-radius: 100px;
+  text-decoration: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); width: fit-content;
+}
+.btn-main:hover { background: #357abd; transform: scale(1.05); opacity: 0.95; }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--white);
+  font-size: 13px; font-weight: 500;
+  padding: 13px 28px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.15);
+  text-decoration: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); width: fit-content;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); transform: scale(1.05); opacity: 0.95; }
+
+/* MARQUEE */
+.marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 1.1rem 0; background: var(--gray); }
+.marquee-track { display: flex; gap: 0; white-space: nowrap; animation: marquee 22s linear infinite; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--muted); padding: 0 2rem; display: inline-flex; align-items: center; gap: 2rem; }
+.marquee-item .sep { color: var(--accent); font-size: 16px; }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--border); }
+.stat { padding: 2.5rem; border-right: 1px solid var(--border); position: relative; overflow: hidden; cursor: default; transition: background 0.3s; }
+.stat:hover { background: var(--gray); }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 3rem; font-weight: 800; color: var(--white); line-height: 1; transition: color 0.3s; }
+.stat:hover .stat-num { color: var(--accent); }
+.stat-num sup { font-size: 1.4rem; color: var(--accent); }
+.stat-label { font-size: 11px; text-transform: uppercase; color: var(--muted); margin-top: 0.6rem; }
+.stat-line { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--accent); width: 0; transition: width 0.5s ease; }
+.stat:hover .stat-line { width: 100%; }
+
+/* SECTION LABEL */
+.section-label { display: flex; align-items: center; gap: 12px; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; }
+.section-label::before { content:''; display:block; width: 20px; height: 1px; background: var(--accent); }
+
+/* ABOUT + SKILLS */
+.about { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+.about-left { padding: 4rem 0; padding-right: 2.5rem; border-right: 1px solid var(--border); }
+.about-right { padding: 4rem 0; padding-left: 2.5rem; }
+.about h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700; line-height: 1.25; margin-bottom: 1.4rem; }
+.about h2 em { font-style: normal; font-weight: 700; color: var(--accent); }
+.about p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 1rem; font-weight: 300; }
+
+/* DRIVE LINK */
+.drive-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 1.5rem; background: rgba(74, 144, 226, 0.06); border: 1px solid rgba(74, 144, 226, 0.2); border-radius: 10px; padding: 14px 20px; text-decoration: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.drive-link:hover { background: rgba(74, 144, 226, 0.12); border-color: rgba(74, 144, 226, 0.4); transform: scale(1.03); }
+.drive-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; color: #fff; }
+.drive-text-wrap { display: flex; flex-direction: column; gap: 2px; }
+.drive-title { font-size: 13px; font-weight: 600; color: var(--white); }
+.drive-sub { font-size: 11px; color: var(--accent); }
+
+/* SKILLS */
+.skill-block { margin-bottom: 1.5rem; }
+.skill-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.skill-name { font-size: 13px; font-weight: 500; color: var(--white); }
+.skill-pct { font-size: 12px; color: var(--accent); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+.skill-track { height: 2px; background: var(--gray2); border-radius: 2px; overflow: hidden; }
+.skill-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent2), var(--accent)); width: 0; transition: width 1.3s cubic-bezier(0.16,1,0.3,1); }
+.tools-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-top: 1.8rem; }
+.tool-chip { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 7px; transition: all 0.2s; cursor: default; }
+.tool-chip:hover { border-color: var(--accent); color: var(--white); background: rgba(74, 144, 226, 0.04); }
+.tool-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* WORK GRID */
+.work-section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+.work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
+.work-filters { display: flex; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap; }
+.filter-btn { font-size: 11px; padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover { border-color: rgba(74, 144, 226, 0.4); color: var(--white); }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+
+.work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.work-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; background: var(--gray); transition: border-color 0.3s, transform 0.3s; position: relative; display: flex; flex-direction: column; }
+.work-card:hover { border-color: rgba(74, 144, 226, 0.3); transform: translateY(-4px); }
+
+.work-thumb { width: 100%; aspect-ratio: 1 / 1; position: relative; overflow: hidden; background: #070a12; }
+.work-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease; }
+.work-card:hover .work-thumb img { transform: scale(1.04); }
+
+.thumb-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); display: flex; align-items: center; justify-content: center; transition: background 0.3s; z-index: 2; }
+.work-card:hover .thumb-overlay { background: rgba(11, 15, 25, 0.5); }
+.thumb-view { font-size: 11px; font-weight: 600; background: var(--accent); color: #fff; padding: 8px 18px; border-radius: 100px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; }
+.work-card:hover .thumb-view { opacity: 1; transform: translateY(0); }
+
+.work-badge { position: absolute; top: 12px; left: 12px; font-size: 9px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; z-index: 3; }
+.badge-m { background: rgba(92, 107, 192, 0.85); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+.badge-v { background: rgba(11, 15, 25, 0.85); color: var(--accent); border: 1px solid rgba(74, 144, 226, 0.3); }
+.badge-g { background: rgba(74, 144, 226, 0.85); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+
+.work-body { padding: 1.4rem; background: var(--gray); flex-grow: 1; }
+.work-tag { font-size: 9px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.work-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; line-height: 1.35; }
+.work-desc { font-size: 12px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+.work-pills { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.work-pill { font-size: 10px; padding: 3px 10px; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); }
+
+/* CONTACT */
+.contact-section { display: grid; grid-template-columns: 1fr 1fr; padding: 4rem 0; border-bottom: 1px solid var(--border); }
+.contact-left { border-right: 1px solid var(--border); padding-right: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+.contact-right { padding-left: 2.5rem; }
+.contact-big { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; }
+.contact-big span { color: var(--accent); }
+.contact-sub { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; font-weight: 300; max-width: 320px; }
+
+.contact-info { display: flex; flex-direction: column; }
+.contact-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.contact-row:first-child { border-top: 1px solid var(--border); }
+.contact-key { font-size: 10px; text-transform: uppercase; color: var(--muted); }
+.contact-val { font-size: 13px; color: var(--white); }
+.contact-val a { color: var(--accent); text-decoration: none; }
+.contact-val a:hover { text-decoration: underline; }
+.avail-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); font-weight: 500; }
+.avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+
+footer { padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--muted); max-width: var(--max-content); margin: 0 auto; }
+footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: var(--accent); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* MOBILE RESPONSIVE OPTIMIZATIONS */
+@media (max-width: 992px) {
+  .nav-whatsapp-text { display: none; }
+}
+@media (max-width: 768px) {
+  .container { padding: 0 1.2rem; }
+  .nav-container { padding: 0.6rem 1.2rem; }
+  .nav-links { display: none; }
+  .nav-actions { gap: 8px; }
+  .nav-whatsapp-btn span, .nav-cta-portfolio span { display: none; } 
+  .nav-whatsapp-btn, .nav-cta-portfolio { padding: 8px 12px; }
+  
+  /* تكييف الأنميشن للموبايل */
+  .nav-logo-render { height: 50px; width: 110px; }
+  .nav-logo-box:hover .nav-logo-render { transform: scale(1.05); }
+  nav:has(.nav-logo-box:hover) .nav-container { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+
+  .hero { min-height: 85vh; justify-content: center; text-align: center; padding-top: 100px; }
+  .hero h1 { font-size: 2.2rem; margin-bottom: 1.5rem; }
+  .hero-meta { flex-direction: column; gap: 1.5rem; align-items: center; }
+  .hero-desc { max-width: 100%; text-align: center; font-size: 13px; }
+  .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
+  .btn-main, .btn-outline { width: 100%; justify-content: center; }
+  .stats { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 1.8rem 1rem; }
+  .about, .contact-section { grid-template-columns: 1fr; }
+  .about-left, .contact-left { border-right: none; border-bottom: 1px solid var(--border); padding: 3.5rem 0; }
+  .about-right, .contact-right { padding: 3.5rem 0; }
+  .work-grid { grid-template-columns: 1fr; gap: 16px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 2rem 0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo-box">
+      <div class="nav-logo-render"></div>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <div class="nav-whatsapp-wrapper">
+        <span class="nav-whatsapp-text">تواصل سريع؟</span>
+        <a class="nav-whatsapp-btn" href="https://wa.me/+201031002709" target="_blank">
+          <svg viewBox="0 0 32 32">
+            <path d="M16 2a14 14 0 0 0-12.1 21L2 29l6.2-1.6A14 14 0 1 0 16 2zm7.5 20.2c-.3.9-1.6 1.7-2.6 1.9-.7.1-1.6.2-4.6-1-3.9-1.6-6.4-5.6-6.6-5.8-.2-.2-1.7-2.2-1.7-4.3 0-2.1 1.1-3.1 1.5-3.5.3-.3.8-.5 1.2-.5.1 0 .3 0 .4.1.4 0 .6.1.8.6.3.7 1 2.4 1.1 2.6.1.2.1.5-.1.7-.2.3-.4.5-.6.8-.2.2-.4.5-.2.9.3.5 1.2 2 2.6 3.2 1.8 1.6 3.3 2.1 3.7 2.3.5.2.7.2 1-.1.3-.4.8-1 1.1-1.5.2-.4.5-.3.9-.2.4.1 2.4 1.1 2.8 1.3.4.2.7.3.8.5.1.3.1 1.5-.2 2.4z"/>
+          </svg>
+          <span>كلمني واتساب 💬</span>
+        </a>
+      </div>
+
+      <a class="nav-cta-portfolio" href="https://drive.google.com/drive/u/0/folders/12z3mJJzZhXKoeGaHMDeE8uY5ZKE-sv-P" target="_blank">
+        <span>Portfolio 📁</span>
+      </a>
+
+      <a class="nav-cta" href="https://www.behance.net/elmotionaty" target="_blank">Behance ↗</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-cover"></div>
+  <div class="container">
+    <div class="hero-eyebrow">
+      <div class="hero-dot"></div>
+      <span>Available for freelance &amp; full-time</span>
+    </div>
+    <h1>
+      Motion <span class="acc">Designer</span><br>
+      &amp; <em>Video Editor</em>
+    </h1>
+    <div class="hero-meta">
+      <p class="hero-desc">6+ years crafting animations, brand identities, and cinematic video — based in Cairo, Egypt.</p>
+      <div class="hero-actions">
+        <a class="btn-main" href="#work">View my work ↓</a>
+        <a class="btn-outline" href="https://drive.google.com/drive/u/0/folders/12z3mJJzZhXKoeGaHMDeE8uY5ZKE-sv-P" target="_blank">Open Drive ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="marquee-wrap" style="margin: 0 -2rem;">
+    <div class="marquee-track">
+      <span class="marquee-item">Motion Graphics <span class="sep">✦</span> Video Editing <span class="sep">✦</span> After Effects <span class="sep">✦</span> Premiere Pro <span class="sep">✦</span> VFX &amp; Compositing <span class="sep">✦</span> Color Grading <span class="sep">✦</span> Brand Identity <span class="sep">✦</span> Logo Animation <span class="sep">✦</span> Adobe Creative Suite <span class="sep">✦</span>&nbsp;</span>
+      <span class="marquee-item">Motion Graphics <span class="sep">✦</span> Video Editing <span class="sep">✦</span> After Effects <span class="sep">✦</span> Premiere Pro <span class="sep">✦</span> VFX &amp; Compositing <span class="sep">✦</span> Color Grading <span class="sep">✦</span> Brand Identity <span class="sep">✦</span> Logo Animation <span class="sep">✦</span> Adobe Creative Suite <span class="sep">✦</span>&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat reveal">
+      <div class="stat-num">6<sup>+</sup></div>
+      <div class="stat-label">Years of experience</div>
+      <div class="stat-line"></div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">120<sup>+</sup></div>
+      <div class="stat-label">Projects delivered</div>
+      <div class="stat-line"></div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Languages spoken</div>
+      <div class="stat-line"></div>
+    </div>
+  </div>
+
+  <div class="about" id="about">
+    <div class="about-left reveal">
+      <div class="section-label">About</div>
+      <h2>Where craft meets<br><em>visual</em> storytelling</h2>
+      <p>I'm Mazen Sayed Mohamed — a Senior Motion Graphic Designer and Video Editor who believes every frame is a chance to say something meaningful. Over six years I've worked across ad campaigns, brand identities, social content, and full video productions.</p>
+      <p>I bring a director's eye to every brief: pacing, emotion, color, and rhythm all working together to leave a lasting impression on the audience.</p>
+
+      <a class="drive-link" href="https://drive.google.com/drive/u/0/folders/12z3mJJzZhXKoeGaHMDeE8uY5ZKE-sv-P" target="_blank">
+        <div class="drive-icon">📁</div>
+        <div class="drive-text-wrap">
+          <span class="drive-title">Full portfolio — Google Drive</span>
+          <span class="drive-sub">View all 120+ projects ↗</span>
+        </div>
+      </a>
+    </div>
+    <div class="about-right reveal">
+      <div class="section-label">Skills &amp; tools</div>
+      <div class="skill-block">
+        <div class="skill-top"><span class="skill-name">Adobe After Effects</span><span class="skill-pct">98%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="98"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-top"><span class="skill-name">Adobe Premiere Pro</span><span class="skill-pct">96%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="96"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-top"><span class="skill-name">Color grading</span><span class="skill-pct">91%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="91"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-top"><span class="skill-name">VFX &amp; compositing</span><span class="skill-pct">87%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="87"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-top"><span class="skill-name">Adobe Photoshop</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
+      </div>
+
+      <div class="tools-grid">
+        <div class="tool-chip"><div class="tool-dot"></div>Brand identity</div>
+        <div class="tool-chip"><div class="tool-dot"></div>Logo animation</div>
+        <div class="tool-chip"><div class="tool-dot"></div>Social media content</div>
+        <div class="tool-chip"><div class="tool-dot"></div>Visual storytelling</div>
+      </div>
+    </div>
+  </div> 
+  
+
+
+
+  <section class="work-section" id="work">
+    <div class="work-header">
+      <div class="section-label" style="margin-bottom:0">Selected work</div>
+    </div>
+
+    <div class="work-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="motion">Motion</button>
+      <button class="filter-btn" data-filter="video">Video</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card reveal" data-cat="motion" data-video="https://player.vimeo.com/video/867479650">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiM4HH9Q8CI-AJuhNTLlbHaVzzpKzHslQqcmCk14QDRqkR6q9TOKkEjdx2ES18gILHqLG7piZUYrTGQUpJMjrOfeU_anbAPxhPRbED9puTCJjkqsOprWCXcbpn2nd9JPqpTxv5Pjs-Nir5EE_8pKZS4Qvsy1vkpluG-40_dS7WdO0AHBk8s6YsoqgAzoxY/s1600/Screenshot%202026-06-30%20203127.png" alt="Motion Project">
+          <span class="work-badge badge-m">Motion Design</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">Motion Graphic</div>
+          <div class="work-title">Brand identity animation system</div>
+          <div class="work-desc">Full motion identity for a regional brand — logo reveal, social templates, and animated style guide.</div>
+          <div class="work-pills">
+            <span class="work-pill">After Effects</span>
+<span class="work-pill">Illustrator</span>
+<span class="work-pill">Premiere Pro</span>
+            <span class="work-pill">Logo animation</span>
+<span class="work-pill">Explainer Motion Graphics</span>
+          </div>
+        </div>
+      </div>
+
+<div class="work-card reveal" data-cat="motion" data-video="https://player.vimeo.com/video/895322105">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_FE_qzEFFm6EYBWbZEYVmnMXzanG1SuDdqi70lR3851Sjx9Py8nFCHgpuZMNhkoHNdGGzjoxjkQkfDOAuCwxecitp8g38GA746FgCLHXpIDRMWQ9Y1EjdQJjBFmPDrpNRrB71N5RMP22eEapLOe0fy27PjK496N5TegG030EZEEAuxYHCs1lJ2JPlnuc/s1600/Screenshot%202026-06-30%20222755.png" alt="Motion Project">
+          <span class="work-badge badge-m">Motion Design</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">InfoGraphic</div>
+          <div class="work-title">Animated Graphical Represantaion</div>
+          <div class="work-desc">Next-gen motion branding for a regional university network — Kinetic logo reveal, animated course intro templates, UI/UX motion transitions, and a complete animated style guide.</div>
+          <div class="work-pills">
+            <span class="work-pill">After Effects</span>
+<span class="work-pill">Illustrator</span>
+<span class="work-pill">Premiere Pro</span>
+            <span class="work-pill">Logo animation</span>
+<span class="work-pill">Explainer Motion Graphics</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="work-card reveal" data-cat="video" data-video="https://player.vimeo.com/video/898553749">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiL2Y6jfDz74nWHJ1COZg6cGgC8JqR1yACcGDzqSIgQNLtyWmtzpKmRcIrfYUqr6wCBJ0zDZQ5sbjk9N2a8V4yKMLuXCdF4haXIq33k2pUwEMUM-Wb8j34b7geviwsfELnzC0J8kWGKWvz_XR8bMI9Q2dX-XlHDUF_MG-RXkpRtQ9ES_zBm4faVTL_f5Z4/s1600/Screenshot%202026-06-30%20203204.png" alt="VFX Project">
+          <span class="work-badge badge-v">RealState</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">VFX &amp; compositing</div>
+          <div class="work-title">Realstate Explainer</div>
+          <div class="work-desc">Multi-layer compositing and visual effects for a broadcast production.</div>
+          <div class="work-pills">
+		<span class="work-pill">After Effects</span>
+            	<span class="work-pill">Premiere Pro</span>
+           	 <span class="work-pill">Compositing</span>
+		<span class="work-pill">3d</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-cat="design" data-video="https://drive.google.com/file/d/1WNcNtDvCn0fPvJS4sxwMVU2afRosuo6o/preview">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTcOCiVw8_JxQByaa0a3OYYG-uKTZTMUnSGpIB_eHYE7wffYkcoq2bpPYy1KudYXszlAnOYZNg3x5623uLp0DXZjJXfLOOvQkdb_EP2JHmQ0Xr2D6Ji7Vt8zklT2IT0-YRcdlXZ5asx3Wi9J37TybcKODRQX0f1Hz7AZJDnezbIgT1M2SazcwokcpAyVY/s1600/%D8%A5%D8%A8%D8%AF%D8%A7%D8%B9%20%D8%A8%D9%84%D8%A7%20%D8%AD%D8%AF%D9%88%D8%AF.jpg" alt="Design Project">
+          <span class="work-badge badge-g">Graphic design</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">Graphic design</div>
+          <div class="work-title">Data visualization campaign</div>
+          <div class="work-desc">High-converting product mockups and graphic design for social media campaigns.</div>
+          <div class="work-pills">
+            <span class="work-pill">Photoshop</span>
+            <span class="work-pill">Social media</span>
+<span class="work-pill">Product mockup</span>
+  		<span class="work-pill">Graphical visualization</span>
+          </div>
+        </div>
+      </div>
+
+
+ <div class="work-card reveal" data-cat="design" data-video="https://drive.google.com/file/d/1jvDlU6AleoHTGdG-YdJ0HySuPN3JXidc/preview">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQovlOJz1O_YYdf95afEwKBt3szDaP4c6LrQyHDFX5Of4YvfkjpCqBDPntGn2Fe1y3RnGaTZ5tnK8YagiXitUJK_UHgrRgfEZALVWvajb0CbNhd0bH7fciuuywTF2uPEUxlfcJYDAlGH5Hile58HJmb3A_o_hMMbk9rg-UrxHX3fe8EPtkB46dgTZoRTw/s1600/%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20%D9%8A%D8%A8%D8%AF%D8%A3%20%D8%A8%D8%AE%D8%B7%D8%A9%20%D8%A7%D8%B3%D8%A7%D8%B3%D9%89.jpg" alt="Design Project">
+          <span class="work-badge badge-g">Graphic design</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">Visual Identity</div>
+          <div class="work-title">Visual idea Representaion </div>
+          <div class="work-desc">Character-driven product promos and branded social media graphic design packages.</div>
+          <div class="work-pills">
+            <span class="work-pill">Photoshop</span>
+<span class="work-pill">Character Design</span>
+            <span class="work-pill">Social media</span>
+  		<span class="work-pill">Graphical visualization</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card reveal" data-cat="video" data-video="https://player.vimeo.com/video/1205871197">
+        <div class="work-thumb">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdbtldbN_3DA4haQg0QSo_4OL6Vyz4yay-XFOZWOEXWl41vdzWSlShnsebejaZ6eebUab0rl_0lNoudarXD20nzgb_f4rvMQUB9gAKnRiedBFfjKfAKNyF3QNgbYmCayh3fwzPx5a-kSKsDQpRwVuNxBsyDousDgUnrcuE2RhTT_dvH0cq5InzpXSOfuw/s1600/Screenshot%202026-06-30%20203352.png" alt="Showreel">
+          <span class="work-badge badge-v">Reels</span>
+          <div class="thumb-overlay"><span class="thumb-view">▶ View</span></div>
+        </div>
+        <div class="work-body">
+          <div class="work-tag">Full video production</div>
+          <div class="work-title">Promo Video</div>
+          <div class="work-desc">From brief to delivery: scripting, editing, color grading, and platform export.</div>
+          <div class="work-pills">
+            <span class="work-pill">Premiere Pro</span>
+            <span class="work-pill">After Effects</span>
+            <span class="work-pill">photoshop</span>
+	<span class="work-pill">Animated Graphics</span>
+	<span class="work-pill">Subtitles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <div class="contact-left reveal">
+      <div>
+        <div class="section-label">Contact</div>
+        <div class="contact-big">Let's make<br>something<br><span>great.</span></div>
+        <p class="contact-sub">Whether it's a brand film, social campaign, or full motion identity — I'd love to hear about your project.</p>
+      </div>
+      <a class="btn-main" href="mailto:mazen.alsadat2001@gmail.com">Send me an email ↗</a>
+    </div>
+    <div class="contact-right reveal">
+      <div class="section-label">Details</div>
+      <div class="contact-info">
+        <div class="contact-row">
+          <span class="contact-key">Email</span>
+          <span class="contact-val"><a href="mailto:mazen.alsadat2001@gmail.com">mazen.alsadat2001@gmail.com</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-key">Phone</span>
+          <span class="contact-val">+20 111 195 8142</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-key">Location</span>
+          <span class="contact-val">Cairo, Egypt</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-key">Behance</span>
+          <span class="contact-val"><a href="https://www.behance.net/elmotionaty" target="_blank">elmotionaty ↗</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-key">Status</span>
+          <span class="contact-val">
+            <span class="avail-badge"><span class="avail-dot"></span> Open to work</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Al Sadat</span>
+    <span>Senior Motion Graphic Designer · Cairo, Egypt</span>
+  </footer>
+
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        revObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revObs.observe(el));
+
+  const fills = document.querySelectorAll('.skill-fill');
+  const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.w + '%';
+        skillObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  fills.forEach(el => skillObs.observe(el));
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.work-card[data-cat]').forEach(card => {
+        card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<div id="videoModal" class="video-modal"><div class="video-box"><button class="close-video">&times;</button><iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div>
+<style>
+.video-modal{position:fixed;inset:0;background:rgba(11, 15, 25, 0.95);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.3s;z-index:9999;backdrop-filter:blur(10px);}.video-modal.active{opacity:1;visibility:visible}.video-box{width:min(1100px,90vw);aspect-ratio:16/9;position:relative}.video-box iframe{width:100%;height:100%;border:none;border-radius:12px;box-shadow: 0 20px 50px rgba(0,0,0,0.5);}.close-video{position:absolute;top:-45px;right:0;background:none;border:none;color:#fff;font-size:42px;cursor:pointer}
+</style>
+<script>
+const modal=document.getElementById('videoModal'),frame=document.getElementById('videoFrame');
+let cards=[...document.querySelectorAll('.work-card')];
+cards.forEach(c=>c.onclick=()=>{let v=c.dataset.video;if(!v)return;frame.src=v+(v.includes('?')?'&':'?')+'autoplay=1';modal.classList.add('active');});
+document.querySelector('.close-video').onclick=()=>{modal.classList.remove('active');frame.src='';};
+modal.onclick=e=>{if(e.target===modal){modal.classList.remove('active');frame.src='';}};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('active');frame.src='';}});
+</script>
+
+</body>
+</html>
