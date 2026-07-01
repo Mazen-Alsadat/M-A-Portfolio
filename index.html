@@ -755,21 +755,6 @@ h1:hover::after {
   }
 }
 /* =================================================== */
-/* [Viewport Lockdown] - تثبيت مقاسات الموبايل */
-/* =================================================== */
-html, body {
-  overflow-x: hidden; /* بيمنع أي حاجة تخرج بالعرض وتعمل سكول جانبي */
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* بيمنع أي صورة أو ديف إنه يتخطى عرض الشاشة */
-img, video, div, section {
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
-/* =================================================== */
 /* [Natural Banner Fix] - ضبط البانر للموبايل بدون تمطيط */
 /* =================================================== */
 @media (max-width: 768px) {
@@ -792,6 +777,40 @@ img, video, div, section {
     width: 100% !important;
   }
 }
+/* =================================================== */
+/* [Strict Mobile Containment] - إجبار كل حاجة جوه الشاشة */
+/* =================================================== */
+
+@media (max-width: 768px) {
+  /* 1. منع أي عنصر من الزيادة عن عرض الشاشة */
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    position: relative !important;
+  }
+
+  /* 2. إجبار الهيدر بالذات إنه يلم نفسه */
+  header, .navbar, .nav-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  /* 3. إجبار الـ nav-actions إنها تترتب وما تخرجش بره */
+  .nav-actions {
+    flex-shrink: 0 !important; /* بيمنعها تتمط */
+    flex-wrap: nowrap !important;
+    margin-right: 0 !important;
+    gap: 4px !important;
+  }
+}
+
 </style>
 </head>
 <body>
