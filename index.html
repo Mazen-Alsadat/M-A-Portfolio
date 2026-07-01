@@ -651,24 +651,7 @@ h1:hover::after {
   transform: translateX(5px);
   color: #fff !important;
 }
-/* =================================================== */
-/* 34. [Focus Blur] - تركيز الموقع على السكشن اللي أنت فيه */
-/* =================================================== */
-section {
-  transition: filter 0.5s ease, opacity 0.5s ease;
-}
 
-/* لما أعمل هوفر على أي سكشن، التانيين يبهتوا (Focus) */
-section:hover {
-  filter: blur(0px) brightness(1);
-  opacity: 1;
-}
-
-/* لما الماوس يبقى بره السكشن، السكاشن التانية تبهت سنة */
-section:not(:hover) {
-  filter: blur(1px) brightness(0.7);
-  opacity: 0.7;
-}
 
 /* =================================================== */
 /* [Mobile Optimization] - تهيئة الموقع للموبايل */
