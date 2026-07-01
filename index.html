@@ -769,6 +769,29 @@ img, video, div, section {
   max-width: 100% !important;
   box-sizing: border-box !important;
 }
+/* =================================================== */
+/* [Natural Banner Fix] - ضبط البانر للموبايل بدون تمطيط */
+/* =================================================== */
+@media (max-width: 768px) {
+  .hero-bg-cover {
+    /* بنرجعها cover عشان تحافظ على أبعادها (Aspect Ratio) */
+    background-size: cover !important; 
+    /* بنثبتها في النص بالظبط عشان أي قص يبقى من الجوانب بالتساوي */
+    background-position: center top !important; 
+    /* بنضمن إنها بتاخد عرض الشاشة بالكامل */
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+  }
+
+  .hero {
+    /* بنشيل أي Padding جانبي ممكن يكون هو اللي قاصص الصورة */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+  }
+}
 </style>
 </head>
 <body>
