@@ -711,17 +711,17 @@ footer a:hover { color: var(--accent); }
   });
 </script>
 
-<div id="videoModal" class="video-modal"><div class="video-box"><button class="close-video">&times;</button><iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div>
+<!-- الكود المتعدل والآمن لـ GitHub -->
+<div id="videoModal" class="video-modal" style="display: none;"><div class="video-box"><button class="close-video">&times;</button><iframe id="videoFrame" src="" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div>
 <style>
-.video-modal{position:fixed;inset:0;background:rgba(11, 15, 25, 0.95);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.3s;z-index:9999;backdrop-filter:blur(10px);}.video-modal.active{opacity:1;visibility:visible}.video-box{width:min(1100px,90vw);aspect-ratio:16/9;position:relative}.video-box iframe{width:100%;height:100%;border:none;border-radius:12px;box-shadow: 0 20px 50px rgba(0,0,0,0.5);}.close-video{position:absolute;top:-45px;right:0;background:none;border:none;color:#fff;font-size:42px;cursor:pointer}
+.video-modal{position:fixed;inset:0;background:rgba(11, 15, 25, 0.95);display:none;align-items:center;justify-content:center;opacity:0;z-index:9999;backdrop-filter:blur(10px);transition:opacity .3s;}.video-modal.active{display:flex;opacity:1;}.video-box{width:min(1100px,90vw);aspect-ratio:16/9;position:relative}.video-box iframe{width:100%;height:100%;border:none;border-radius:12px;box-shadow: 0 20px 50px rgba(0,0,0,0.5);}.close-video{position:absolute;top:-45px;right:0;background:none;border:none;color:#fff;font-size:42px;cursor:pointer}
 </style>
 <script>
 const modal=document.getElementById('videoModal'),frame=document.getElementById('videoFrame');
 let cards=[...document.querySelectorAll('.work-card')];
-cards.forEach(c=>c.onclick=()=>{let v=c.dataset.video;if(!v)return;frame.src=v+(v.includes('?')?'&':'?')+'autoplay=1';modal.classList.add('active');});
-document.querySelector('.close-video').onclick=()=>{modal.classList.remove('active');frame.src='';};
-modal.onclick=e=>{if(e.target===modal){modal.classList.remove('active');frame.src='';}};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('active');frame.src='';}});
+cards.forEach(c=>c.onclick=()=>{let v=c.dataset.video;if(!v)return;frame.src=v;modal.style.display='flex';setTimeout(()=>modal.classList.add('active'),10)});
+document.querySelector('.close-video').onclick=()=>{modal.classList.remove('active');setTimeout(()=>modal.style.display='none',300);frame.src=''};
+modal.onclick=(e)=>{if(e.target===modal){modal.classList.remove('active');setTimeout(()=>modal.style.display='none',300);frame.src=''}};
 </script>
 
 </body>
