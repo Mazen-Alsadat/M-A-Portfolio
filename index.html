@@ -708,36 +708,33 @@ h1:hover::after {
   -webkit-tap-highlight-color: transparent; /* بيشيل اللون الرمادي اللي بيظهر لما تلمس زرار على الموبايل */
 }
 /* =================================================== */
-/* 37. [Fixed Mobile Buttons] - أزرار البورتفوليو والـ CV */
+/* [Mobile Optimized Portfolio & CV Buttons Only] */
 /* =================================================== */
 
 @media (max-width: 768px) {
-  /* تعديل الحاوية عشان الزرارين يبقوا فوق بعض بشكل متناسق */
-  .nav-actions {
-    flex-direction: column !important;
-    gap: 8px !important;
-    margin-right: 10px;
-  }
-
-  /* تنسيق الأزرار عشان تبقى "بريميوم" على الموبايل */
+  /* 1. هنحدد الزرارين دول بس */
   .nav-cta-portfolio, 
   .nav-cta-cv {
-    padding: 6px 12px !important;
-    font-size: 10px !important;
-    border-radius: 6px !important;
-    width: 100% !important;
-    text-align: center;
-    white-space: nowrap;
+    width: 32px !important;    /* حجم ثابت */
+    height: 32px !important;
+    padding: 0 !important;
     display: flex !important;
-    justify-content: center;
-    border: 1px solid rgba(74, 144, 226, 0.3) !important;
-    background: rgba(11, 15, 25, 0.8) !important; /* لون غامق شيك */
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0 !important;   /* بيخفي النص */
+    border-radius: 8px !important;
+    overflow: hidden !important;
   }
 
-  /* إخفاء الكلام الطويل لو الشاشة صغيرة جداً عشان الزرار ميكسرش */
-  .nav-cta-portfolio span, 
-  .nav-cta-cv span {
-    display: inline-block !important;
+  /* 2. بنحط الأيقونة بدل النص جوه الزرار */
+  .nav-cta-portfolio::before {
+    content: '📁'; /* أيقونة البورتفوليو */
+    font-size: 16px !important;
+  }
+
+  .nav-cta-cv::before {
+    content: '📄'; /* أيقونة الـ CV */
+    font-size: 16px !important;
   }
 }
 </style>
