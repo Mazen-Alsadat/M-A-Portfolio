@@ -810,6 +810,39 @@ h1:hover::after {
     gap: 4px !important;
   }
 }
+/* =================================================== */
+/* [Mobile Enhancements] - زرار صعود وتصغير الكاردز */
+/* =================================================== */
+
+/* 1. تصغير الكاردز على الموبايل (Scale 90%) */
+@media (max-width: 768px) {
+  .work-card {
+    transform: scale(0.9) !important;
+    margin-bottom: -20px !important; /* بيقرب الكاردز من بعض عشان الموقع يلم */
+    transform-origin: top center !important;
+  }
+}
+
+/* 2. زرار الصعود (Back to Top Button) */
+.back-to-top {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 45px !important;
+  height: 45px !important;
+  background: #3b82f6 !important; /* نفس لون الـ CTA بتاعك */
+  color: white !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  border: none !important;
+  font-size: 20px !important;
+  transition: opacity 0.3s !important;
+}
 
 </style>
 </head>
@@ -1172,6 +1205,7 @@ cards.forEach(c=>c.onclick=()=>{let v=c.dataset.video;if(!v)return;frame.src=v;m
 document.querySelector('.close-video').onclick=()=>{modal.classList.remove('active');setTimeout(()=>modal.style.display='none',300);frame.src=''};
 modal.onclick=(e)=>{if(e.target===modal){modal.classList.remove('active');setTimeout(()=>modal.style.display='none',300);frame.src=''}};
 </script>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
 </body>
 </html>
