@@ -737,6 +737,23 @@ h1:hover::after {
     font-size: 16px !important;
   }
 }
+
+/* =================================================== */
+/* [Mobile Wiggle Balanced] - ويجل هادي وموزون للموبايل */
+/* =================================================== */
+@media (max-width: 768px) {
+  @keyframes cinematicWiggleBalanced {
+    0% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-4px) rotate(0.8deg); } /* قللنا المسافة والميل */
+    50% { transform: translateY(2px) rotate(-0.5deg); }
+    75% { transform: translateY(-2px) rotate(0.4deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  .work-card:not(.fade-out) .work-thumb {
+    animation: cinematicWiggleBalanced 6s ease-in-out infinite !important;
+  }
+}
 </style>
 </head>
 <body>
