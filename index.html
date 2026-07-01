@@ -830,7 +830,7 @@ h1:hover::after {
   right: 20px !important;
   width: 45px !important;
   height: 45px !important;
-  background: #3b82f6 !important; /* نفس لون الـ CTA بتاعك */
+  background: var(--accent) !important; /* لون الموقع */
   color: white !important;
   border-radius: 50% !important;
   display: flex !important;
@@ -838,11 +838,30 @@ h1:hover::after {
   justify-content: center !important;
   cursor: pointer !important;
   z-index: 9999 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
   border: none !important;
   font-size: 20px !important;
-  transition: opacity 0.3s !important;
+  
+  /* الإضافات الجديدة للحركة */
+  opacity: 0;            /* مخفي في البداية */
+  visibility: hidden;    /* غير مرئي */
+  transform: translateY(20px); /* بادئ من تحت شوية */
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
+
+/* لما نضيف كلاس active، الزرار يظهر */
+.back-to-top.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* تأثير الـ Hover الجميل */
+.back-to-top:hover {
+  transform: scale(1.1) translateY(-5px) !important;
+  background: #357abd !important;
+}
+
 
 </style>
 </head>
@@ -1206,6 +1225,19 @@ document.querySelector('.close-video').onclick=()=>{modal.classList.remove('acti
 modal.onclick=(e)=>{if(e.target===modal){modal.classList.remove('active');setTimeout(()=>modal.style.display='none',300);frame.src=''}};
 </script>
 <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+const backToTopBtn = document.querySelector('.back-to-top');
 
+window.addEventListener('scroll', () => {
+  // بيشوف إحنا نزلنا قد إيه من الصفحة (ثلثي الصفحة)
+  const scrollThreshold = document.documentElement.scrollHeight / 3;
+  
+  if (window.scrollY > scrollThreshold) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
+});
+</script>
 </body>
 </html>
