@@ -707,6 +707,39 @@ h1:hover::after {
   overflow: hidden; /* بيضمن إن أي حاجة جوه الكارت متطلعش بره */
   -webkit-tap-highlight-color: transparent; /* بيشيل اللون الرمادي اللي بيظهر لما تلمس زرار على الموبايل */
 }
+/* =================================================== */
+/* 37. [Fixed Mobile Buttons] - أزرار البورتفوليو والـ CV */
+/* =================================================== */
+
+@media (max-width: 768px) {
+  /* تعديل الحاوية عشان الزرارين يبقوا فوق بعض بشكل متناسق */
+  .nav-actions {
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-right: 10px;
+  }
+
+  /* تنسيق الأزرار عشان تبقى "بريميوم" على الموبايل */
+  .nav-cta-portfolio, 
+  .nav-cta-cv {
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+    border-radius: 6px !important;
+    width: 100% !important;
+    text-align: center;
+    white-space: nowrap;
+    display: flex !important;
+    justify-content: center;
+    border: 1px solid rgba(74, 144, 226, 0.3) !important;
+    background: rgba(11, 15, 25, 0.8) !important; /* لون غامق شيك */
+  }
+
+  /* إخفاء الكلام الطويل لو الشاشة صغيرة جداً عشان الزرار ميكسرش */
+  .nav-cta-portfolio span, 
+  .nav-cta-cv span {
+    display: inline-block !important;
+  }
+}
 </style>
 </head>
 <body>
