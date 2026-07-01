@@ -362,6 +362,368 @@ footer a:hover { color: var(--accent); }
   .work-grid { grid-template-columns: 1fr; gap: 16px; }
   footer { flex-direction: column; gap: 12px; text-align: center; padding: 2rem 0; }
 }
+/* =================================================== */
+/* 1. تأثير الخلفية المتحركة والإضاءة في الـ Hero Banner */
+/* =================================================== */
+@keyframes backgroundCinema {
+  0% { background-position: 50% 50%; transform: scale(1.02); }
+  50% { background-position: 52% 48%; transform: scale(1.05); }
+  100% { background-position: 50% 50%; transform: scale(1.02); }
+}
+.hero-bg-cover {
+  animation: backgroundCinema 20s ease-in-out infinite;
+  transition: all 0.5s ease;
+}
+
+/* =================================================== */
+/* 2. أنيميشن سينمائي متتابع لظهور محتوى الواجهة (Hero Content) */
+/* =================================================== */
+@keyframes cinematicReveal {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero .hero-eyebrow, .hero h1, .hero .hero-desc, .hero .hero-actions {
+  opacity: 0;
+  animation: cinematicReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero .hero-eyebrow { animation-delay: 0.1s; }
+.hero h1 { animation-delay: 0.25s; }
+.hero .hero-desc { animation-delay: 0.4s; }
+.hero .hero-actions { animation-delay: 0.55s; }
+
+/* =================================================== */
+/* 4. حركات كروت الشغل (تم القضاء على النطة والخبطة تماماً) */
+/* =================================================== */
+.work-card {
+  /* الانتقال هنا مخصص فقط للـ Hover النظيف */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s ease-in-out !important;
+  will-change: transform, opacity;
+  background: rgba(19, 26, 44, 0.6) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* الأبعاد العشوائية عند الفلترة بالـ Scale (المتوافقة مع الـ JS عندك) */
+.work-card.fade-out {
+  opacity: 0 !important;
+  transform: scale(0.8) translateY(10px) !important;
+  pointer-events: none;
+}
+.work-card.fade-in {
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+}
+
+/* تأثير الـ Hover والهايلايت المستقر بدون أي نطة */
+@media (hover: hover) {
+  .work-card:hover {
+    transform: translateY(-10px) scale(1.01) !important; /* الرفع للأعلى بسلاسة هيدروليكية */
+    border-color: rgba(74, 144, 226, 0.4) !important;
+    box-shadow: 0 25px 50px rgba(11, 15, 25, 0.9), 0 0 30px rgba(74, 144, 226, 0.15) !important;
+  }
+  
+  /* تهديئة حركة الـ الـ Wiggle الداخلي نسبياً وقت الـ Hover عشان عين العميل ترتاح وهي بتقرأ */
+  .work-card:hover .work-thumb {
+    animation-play-state: paused;
+  }
+
+  /* زووم الصورة الداخلي الانسيابي جداً وبدون خبط */
+  .work-card:hover .work-thumb img {
+    transform: scale(1.08) translateZ(0) !important; 
+  }
+}
+
+/* حاوية الصورة - ماسكة الحواف وهي اللي هتاخد الـ Wiggle دلوقتي */
+.work-thumb {
+  overflow: hidden;
+  position: relative;
+  border-radius: inherit;
+  mask-image: -webkit-radial-gradient(white, black);
+  
+  /* الانتقال الخاص بالصورة والحاوية عشان الـ Wiggle والـ Hover ميتصادموش */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform;
+}
+
+.work-thumb img {
+  transform: scale(1.02) translateZ(0);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* حركة الـ Play والـ Overlay */
+.thumb-overlay {
+  background: linear-gradient(to top, rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0)) !important;
+  transition: all 0.4s ease !important;
+}
+.thumb-view {
+  background: #fff !important;
+  color: var(--black) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* =================================================== */
+/* 4 مكرر. حركة الـ Wiggle الواضحة العائمة (تم نقلها للـ Thumb لمنع النط) */
+/* =================================================== */
+@keyframes cinematicWiggle {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(0.6deg); }  /* زودنا طلوع الويجل واللفة عشان تبان صايعة */
+  50% { transform: translateY(2px) rotate(-0.4deg); }
+  75% { transform: translateY(-3px) rotate(0.3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* تشغيل الـ الـ Wiggle على الـ work-thumb عشان نفصل الحركات */
+.work-card:not(.fade-out) .work-thumb {
+  animation: cinematicWiggle 6s ease-in-out infinite;
+}
+
+/* توزيع أوقات الدخول للحفاظ على العشوائية الملوكي */
+.work-card:nth-child(1) .work-thumb { animation-delay: 0s; }
+.work-card:nth-child(2) .work-thumb { animation-delay: 1s; }
+.work-card:nth-child(3) .work-thumb { animation-delay: 2s; }
+.work-card:nth-child(4) .work-thumb { animation-delay: 3s; }
+.work-card:nth-child(5) .work-thumb { animation-delay: 4s; }
+.work-card:nth-child(6) .work-thumb { animation-delay: 5s; }
+
+/* =================================================== */
+/* 5. حركة ذكية للأقسام (Sections) لما تنزل لها */
+/* =================================================== */
+.about, .contact-section, .stats {
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about:hover, .contact-section:hover {
+  background: rgba(19, 26, 44, 0.2);
+}
+
+/* =================================================== */
+/* 6. الإضاءة الخلفية السحرية المتحركة (Cinematic Aura Blur) */
+/* =================================================== */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -10%; left: -10%;
+  width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.15) 0%, rgba(92, 107, 192, 0.05) 50%, rgba(0,0,0,0) 70%);
+  z-index: 0;
+  pointer-events: none;
+  animation: auraFloat 12s ease-in-out infinite alternate;
+  filter: blur(40px);
+}
+
+@keyframes auraFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15vw, 10vh) scale(1.2); }
+  100% { transform: translate(-5vw, 20vh) scale(0.9); }
+}
+/* =================================================== */
+/* 9. تحسين الـ UI بالكامل (تأثيرات عالمية) */
+/* =================================================== */
+
+/* تأثير الـ Smooth Scrolling للموقع كله */
+html {
+  scroll-behavior: smooth;
+}
+
+.work-card::after {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), transparent 50%);
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.work-card:hover::after {
+  opacity: 1;
+}
+
+/* 10. تحسين الـ Scrollbar عشان يفضل شيك */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0b0f19; }
+::-webkit-scrollbar-thumb { 
+  background: rgba(74, 144, 226, 0.3); 
+  border-radius: 10px; 
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(74, 144, 226, 0.6); }
+
+/* 14. حركة الـ Weight للـ Hover */
+.work-card {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.work-card:hover {
+  transform: translateY(-15px) scale(1.02) !important;
+}
+/* =================================================== */
+/* 16. فشخنة العناوين (تأثير الـ Text Reveal) */
+/* =================================================== */
+h1, h2 {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, #4a90e2, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s ease;
+}
+
+h1:hover::after {
+  transform: scaleX(1);
+}
+/* =================================================== */
+/* 17. حركة الصور جوا الكارد */
+/* =================================================== */
+.work-card .work-thumb img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.work-card:hover .work-thumb img {
+  transform: scale(1.1) rotate(2deg) !important;
+}
+/* =================================================== */
+/* 30. [Modern Glass-Pop] - الكارت بيطلع لبره بظل "فخم" */
+/* =================================================== */
+.work-card {
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.work-card:hover {
+  transform: translateY(-12px) scale(1.03) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* =================================================== */
+/* 31. [Scale-Fade Reveal] - الصور بتظهر بزووم ناعم جداً */
+/* =================================================== */
+.work-thumb img {
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform: scale(1) !important;
+}
+
+.work-card:hover .work-thumb img {
+  transform: scale(1.15) !important;
+}
+
+/* =================================================== */
+/* 32. [Active Link Shift] - القوايم واللينكات بتتحرك معاك */
+/* =================================================== */
+.filter-btn {
+  position: relative;
+  transition: all 0.3s ease !important;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.filter-btn:hover {
+  background: rgba(74, 144, 226, 0.15) !important;
+  transform: translateX(5px);
+  color: #fff !important;
+}
+/* =================================================== */
+/* 34. [Focus Blur] - تركيز الموقع على السكشن اللي أنت فيه */
+/* =================================================== */
+section {
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+
+/* لما أعمل هوفر على أي سكشن، التانيين يبهتوا (Focus) */
+section:hover {
+  filter: blur(0px) brightness(1);
+  opacity: 1;
+}
+
+/* لما الماوس يبقى بره السكشن، السكاشن التانية تبهت سنة */
+section:not(:hover) {
+  filter: blur(1px) brightness(0.7);
+  opacity: 0.7;
+}
+
+/* =================================================== */
+/* [Mobile Optimization] - تهيئة الموقع للموبايل */
+/* =================================================== */
+@media (max-width: 768px) {
+  
+  /* 1. إلغاء الـ Hover المزعج اللي بيعلق على الموبايل */
+  .work-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: rgba(255, 255, 255, 0.04) !important;
+  }
+
+  /* 2. إلغاء الـ Blur اللي بيتقل المتصفح */
+  section {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  /* 3. تصغير حركة الـ Wiggle عشان متبانش "بايظة" */
+  .work-card .work-thumb {
+    animation: none !important;
+  }
+
+  /* 4. تبسيط حركة الـ Hero Banner */
+  .hero-bg-cover {
+    animation: none !important;
+    transform: scale(1) !important;
+  }
+
+  /* 5. تحجيم الكروت عشان متخرجش بره الشاشة */
+  .work-card {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* 6. إلغاء تأثيرات الـ Hover اللي بتعتمد على الفأرة */
+  .work-card:hover .work-thumb img {
+    transform: scale(1.05) !important; /* زووم هادي جداً */
+  }
+}
+
+/* =================================================== */
+/* [Performance Fix] - تثبيت وتوحيد الانتقالات (للكل) */
+/* =================================================== */
+.work-card, .filter-btn, section {
+  /* توحيد الانتقال يمنع "الفليكر" ويخلي الأداء ناعم */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* حل نهائي لمشكلة الحواف المقطوعة (تأكد إن ده موجود) */
+.work-card {
+  overflow: hidden; /* بيضمن إن أي حاجة جوه الكارت متطلعش بره */
+  -webkit-tap-highlight-color: transparent; /* بيشيل اللون الرمادي اللي بيظهر لما تلمس زرار على الموبايل */
+}
 </style>
 </head>
 <body>
