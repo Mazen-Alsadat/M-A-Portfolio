@@ -754,6 +754,21 @@ h1:hover::after {
     animation: cinematicWiggleBalanced 6s ease-in-out infinite !important;
   }
 }
+/* =================================================== */
+/* [Viewport Lockdown] - تثبيت مقاسات الموبايل */
+/* =================================================== */
+html, body {
+  overflow-x: hidden; /* بيمنع أي حاجة تخرج بالعرض وتعمل سكول جانبي */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* بيمنع أي صورة أو ديف إنه يتخطى عرض الشاشة */
+img, video, div, section {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
 </style>
 </head>
 <body>
